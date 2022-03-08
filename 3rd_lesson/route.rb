@@ -1,26 +1,20 @@
 class Route
+  attr_reader :stations
 
-  def initialize(start, finish)
-    @start = start
-    @finish = finish
-    @additional_stations = []
+  def initialize(start_station, finish_station)
+    @stations = [start_station, finish_station]
   end
 
   def add_station(station)
-    @additional_stations << station
+    @stations.insert(-2, station)
   end
 
   def delete_station(station)
-    @additional_stations.delete(station)
+    @stations.delete(station)
   end
 
   def show_stations
-    station_names = full_route.map { |station| station.name }
-    puts station_names.join(', ')
-  end
-
-  def full_route
-    [@start]+ @additional_stations + [@finish]
+    puts stations.join(', ')
   end
 end
 

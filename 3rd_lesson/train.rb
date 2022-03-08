@@ -6,11 +6,10 @@ class Train
     @type = type
     @number_of_wagons = number_of_wagons
     @speed = 0
-    @current_station = nil
   end
 
-  def speed_up
-    @speed += 10
+  def speed_up(value)
+    @speed += value
   end
   
   def stop
@@ -26,32 +25,23 @@ class Train
   end
 
   def get_route(route)
-    @route_list = route.full_route
-    @current_station = @route_list[0]
+    @route_list = route.stations
+    @current_station_index = 0
   end
 
   def move_forward
-    @current_station += 1 if can_move?
+    @current_station_index += 1 unless finish_station?
   end
 
   def move_backwards
-    @current_station -= 1 if can_move?
+    @current_station_index -= 1 unless starting_station?
   end
     
-#Возвращается массив из 3 элементов. Там, где вывести название станции невозможно(первая и последняя станции), будет nil
   def status
-    result = []
-    if @current_station == 0
-      result << nil
+    if @current_station_index == 0
+      [@route_list[0], @route_list[1]]
     else
-      result << @route_list[@current_station - 1]
-    end
-
-    result << @route_list[@current_station]
-    if @current_station == @route_list.size - 1
-      result << nil
-    else
-      result << @route_list[@current_station + 1]
+      [@route_list[@current_station_index - 1], @route_list[@current_station_index], @route_list[@current_station_index + 1]].compact
     end
   end
 
@@ -63,10 +53,11 @@ class Train
     true
   end
 
-#Проверка на нахождение поезда в крайних точках маршрута
-  def can_move?
-    return false if @current_station == 0
-    return false if @current_station == @route_list.size - 1
-    true    
+  def starting_station?
+    @current_station_index == 0 ? true : false   
+  end
+
+  def finish_station?
+    @current_station_index == @route_list.size - 1 ? true : false    
   end
 end
