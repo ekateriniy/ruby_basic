@@ -49,12 +49,17 @@ class Train
     end
   end
 
+#Метод для вытаскивания номеров вагонов у конкретного поезда
+  def wagon_numbers
+    wagons.map { |wagon| wagon.number }
+  end
+
 #Методы проверки состояния класса, доступ к которым не нужен в других классах
   private
 
   def train_moving?
-    return false if @speed != 0
-    true
+    return true if @speed != 0
+    false
   end
 
   def same_type?(wagon)

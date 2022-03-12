@@ -107,10 +107,14 @@ class RailRoad
 
 # Добавлять и отцеплять вагоны у поезда
   def wagon_manegment
-    puts 'Номера и типы поездов:' 
-    trains.each_with_index { |train, i| puts "#{i}: #{train.number}- #{train.type}"}
-    puts 'Номера и типы вагонов:' 
-    wagons.each_with_index { |wagon, i| puts "#{i}: #{wagon.number}- #{wagon.type}"}
+    puts 'Поезда:' 
+    trains.each_with_index do |train, i| 
+      puts "Индекс #{i}: номер #{train.number}, тип #{train.type}"
+      puts "#{train_wagons_info(train)}"
+    end
+
+    puts 'Вагоны:' 
+    wagons.each_with_index { |wagon, i| puts "Индекс #{i}: номер #{wagon.number}, тип #{wagon.type}"}
 
     puts "Введите 1, чтобы добавить вагон\nВведите 2, чтобы отцепить вагон. Вагон и поезд должны быть одного типа\n\nВведите 0, чтобы вернуться в главное меню"
     action = gets.to_i
@@ -121,8 +125,10 @@ class RailRoad
     case action
     when 1
       train.add_wagon(wagon)
+      train_wagons_info(train)
     when 2
       train.remove_wagon(wagon)
+      train_wagons_info(train)
     end
   end
 
