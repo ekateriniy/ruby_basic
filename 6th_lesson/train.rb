@@ -8,7 +8,7 @@ class Train
 
   attr_reader :speed, :type, :number, :wagons
 
-  def initialize(number, type = :undefined)
+  def initialize(number, type)
     @number = number
     @type = type
     @wagons = []
@@ -88,7 +88,7 @@ class Train
   end 
 
   def validate_type!
-    raise "Type must be string without special characters." if type =~ /[\s!"`'#%&,:;<>=@{}~\$\(\)\*\+\/\\\?\[\]\^\|]+/
+    raise "Type must be cargo or passenger" if type != :cargo && type != :passenger
   end
 
 #Методы проверки состояния класса, доступ к которым не нужен в других классах

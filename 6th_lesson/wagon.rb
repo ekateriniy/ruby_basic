@@ -4,8 +4,8 @@ class Wagon
 
   NUMBER_FORMAT = /^\d{7}$/
 
-  def initialize(number, type = :undefined)
-    @number, @type = number, type 
+  def initialize(number, type)
+    @number, @type = number, type
     validate_number!
     validate_type!
   end
@@ -29,6 +29,6 @@ class Wagon
   end 
 
   def validate_type!
-    raise "Type must be string without special characters." if type =~ /[\s!"`'#%&,:;<>=@{}~\$\(\)\*\+\/\\\?\[\]\^\|]+/
+    raise "Type must be cargo or passenger" if type != :cargo && type != :passenger
   end
 end

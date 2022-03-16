@@ -49,16 +49,16 @@ class RailRoad
   end
 
   def create_train
-    puts 'Введите тип поезда. Тип должен состоять из букв и/или цифр, без пробелов.'
+    puts 'Введите тип поезда. Доступные типы: cargo, passenger'
     train_type = gets.chomp.to_sym
     puts 'Введите номер поезда. Допустимый формат: три буквы или цифры в любом порядке, необязательный дефис и еще 2 буквы или цифры после дефиса.'
     train_number = gets.chomp    
     
     train = case train_type
     when :cargo
-      CargoTrain.new(train_number)
+      CargoTrain.new(train_number, train_type)
     when :passenger
-      PassengerTrain.new(train_number)
+      PassengerTrain.new(train_number, train_type)
     else
       Train.new(train_number, train_type)
     end
@@ -72,16 +72,16 @@ class RailRoad
   end
   
   def create_wagon
-    puts 'Введите тип вагона. Тип должен состоять из букв и/или цифр, без пробелов.'
+    puts 'Введите тип вагона. Доступные типы: cargo, passenger'
     wagon_type = gets.chomp.to_sym
     puts 'Введите номер вагона. Допустимый формат: семь цифр, без букв.'
     wagon_number = gets.chomp
 
     wagon = case wagon_type
     when :cargo
-      CargoWagon.new(wagon_number)
+      CargoWagon.new(wagon_number, wagon_type)
     when :passenger
-      PassengerWagon.new(wagon_number)
+      PassengerWagon.new(wagon_number, wagon_type)
     else
       Wagon.new(wagon_number, wagon_type)
     end
