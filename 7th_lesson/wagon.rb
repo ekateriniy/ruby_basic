@@ -1,11 +1,14 @@
 class Wagon
   include Producer
   attr_reader :type, :number, :belongs_to
+  attr_accessor :available_space, :booked_space
 
   NUMBER_FORMAT = /^\d{7}$/
 
-  def initialize(number, type)
-    @number, @type = number, type
+  def initialize(number, type, capacity)
+    @number, @type, @capacity = number, type, capacity
+    self.available_space = capacity
+    self.booked_space = 0
     validate_number!
     validate_type!
   end

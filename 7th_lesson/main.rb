@@ -57,12 +57,12 @@ rr.stations.each do |station|
     train.each_wagon do |wagon|
       puts "wagon number: #{wagon.number}, wagon type: #{wagon.type}"
       if wagon.type == :cargo
-        puts "available space: #{wagon.available_space}, occupied space: #{wagon.occupied_space}"
+        puts "available space: #{wagon.available_space}, booked space: #{wagon.booked_space}"
       elsif wagon.type == :passenger
-        puts "booked seats: #{wagon.booked_seats}, available seats: #{wagon.available_seats}"
+        puts "booked seats: #{wagon.booked_space}, available seats: #{wagon.available_space}"
       end
     end
   end
 end
 
-#rr.menu
+# rr.menu

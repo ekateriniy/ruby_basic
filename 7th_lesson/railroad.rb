@@ -36,12 +36,13 @@ class RailRoad
   end
 
   def create_route
-    stations.each_with_index { |station| puts "#{i}: #{station.name}" }
+    stations.each_with_index { |station, i| puts "#{i}: #{station.name}" }
     puts 'Введите номер начальной станции из предложенных выше'
     start_station = station_object_reciever
     puts 'Введите номер конечной станции'
     finish_station = station_object_reciever
     @routes << Route.new(start_station, finish_station)
+    puts "Создан маршрут #{routes[-1].name.join(' - ')}"
   end
 
   def create_station
@@ -89,8 +90,6 @@ class RailRoad
       puts 'Введите количество мест в вагоне'
       wagon_seats = gets.to_i
       PassengerWagon.new(wagon_number, wagon_type, wagon_seats)
-    else
-      Wagon.new(wagon_number, wagon_type)
     end
 
     @wagons << wagon
@@ -182,9 +181,9 @@ class RailRoad
     train.each_wagon do |wagon|
       puts "Номер вагона: #{wagon.number}, тип: #{wagon.type}"
       if wagon.type == :cargo
-        puts "Доступный грузовой объем: #{wagon.available_space}, занятый объем: #{wagon.occupied_space}"
+        puts "Доступный грузовой объем: #{wagon.available_space}, занятый объем: #{wagon.booked_space}"
       elsif wagon.type == :passenger
-        puts "Количество занятых мест: #{wagon.booked_seats}, количество свободных мест: #{wagon.available_seats}"
+        puts "Количество занятых мест: #{wagon.booked_space}, количество свободных мест: #{wagon.available_space}"
       end
     end
   end
@@ -222,11 +221,11 @@ class RailRoad
     when :cargo
       puts "Введите нужный объем, доступный объем: #{wagon.available_space}"
       cargo_volume = gets.to_i
-      wagon.occupy_space(cargo_volume)
+      wagon.book_space(cargo_volume)
       puts "Осталось: #{wagon.available_space} свободного места"
     when :passenger
       wagon.book_seat
-      puts "Осталось #{wagon.available_seats} свободных мест"
+      puts "Осталось #{wagon.available_space} свободных мест"
     end
 
     rescue RuntimeError => e
@@ -269,7 +268,7 @@ class RailRoad
   end 
 
   def station_object_reciever
-    station_index = gets.chomp
+    station_index = gets.to_i
     stations[station_index]
   end
 end
